@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Te Amo Victoria</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <div id="book-container" style="position: relative; width: 400px; height: 400px;">
+      <canvas id="canvas" width="400" height="400" style="position: absolute; left: 0; top: 0;"></canvas>
+      <!-- Flechas de navegación -->
+      <button id="prevPage" class="nav-btn" style="display: none;">
+        <svg viewBox="0 0 32 32"><path d="M21.5 28.5c-.3 0-.5-.1-.7-.3l-10-10c-.4-.4-.4-1 0-1.4l10-10a1 1 0 1 1 1.4 1.4L12.42 17l9.8 9.8a1 1 0 0 1-1.4 1.4z"/></svg>
+      </button>
+      <button id="nextPage" class="nav-btn">
+        <svg viewBox="0 0 32 32"><path d="M10.5 28.5c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-10-10a1 1 0 1 0-1.4 1.4L19.58 17l-9.8 9.8a1 1 0 0 0 1.4 1.4z"/></svg>
+      </button>
+    </div>
+
+    <script src="libro.js"></script>
+</body>
+</html>
