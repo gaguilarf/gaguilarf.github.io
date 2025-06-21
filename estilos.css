@@ -6,7 +6,7 @@ body {
   align-items: center;
   height: 100vh;
   /* Fondo de carta */
-  background-image: url('carta.png');
+  background-image: url('img/carta.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -45,5 +45,5 @@ canvas {
 .nav-btn:hover svg {
   fill: #d46a92;
 }
-#prevPage.nav-btn { left: 10px; }
-#nextPage.nav-btn { right: 10px; }
+#prevPage.nav-btn { left: -35px; }
+#nextPage.nav-btn { right: -35px; }

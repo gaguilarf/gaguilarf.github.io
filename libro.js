@@ -12,9 +12,9 @@ let arrowX = -40;
 let showTeAmo = true;
 let victoriaColor = "#ff3366";
 
-// Cargar imagen de flecha
+// Cambiar rutas de imágenes a la carpeta img/
 const flechaImg = new Image();
-flechaImg.src = 'flecha.png';
+flechaImg.src = 'img/flecha.png';
 
 // Generar puntos de contorno
 function generateHeartPath(scale = 10, step = 0.01) {
@@ -94,9 +94,9 @@ function animateStroke(index = 0) {
   drawHeartStroke(index);
   drawText();
   if (index < heartPath.length) {
-    requestAnimationFrame(() => animateStroke(index + 3));
+    animationFrameId = requestAnimationFrame(() => animateStroke(index + 3));
   } else {
-    setTimeout(() => animateArrow(), 700);
+    timeoutId = setTimeout(() => animateArrow(), 700);
   }
 }
 
@@ -114,9 +114,9 @@ function animateArrow() {
   }
 
   if (arrowX < width + 40) {
-    requestAnimationFrame(animateArrow);
+    animationFrameId = requestAnimationFrame(animateArrow);
   } else {
-    setTimeout(() => fillHeart(), 600);
+    timeoutId = setTimeout(() => fillHeart(), 600);
   }
 }
 
@@ -128,7 +128,7 @@ function fillHeart() {
     fillHeartBrush();
     drawText();
     fillProgress += 3;
-    requestAnimationFrame(fillHeart);
+    animationFrameId = requestAnimationFrame(fillHeart);
   } else {
     victoriaColor = "white";
     ctx.clearRect(0, 0, width, height);
@@ -138,51 +138,77 @@ function fillHeart() {
   }
 }
 
-// --- SISTEMA DE PÁGINAS ---
-const pages = [
+// --- SISTEMA DE PÁGINAS CON JSON ---
+let pages = [
   {
     type: 'animacion',
     render: () => {
-      // Animación de corazón y flecha
       resetAnim();
       generateHeartPath();
       animateStroke();
     }
-  },
-  {
-    type: 'texto',
-    render: () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = '#ff3366';
-      ctx.font = 'bold 26px serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('Eres mi inspiración', centerX, centerY - 20);
-      ctx.font = '20px serif';
-      ctx.fillStyle = '#333';
-      ctx.fillText('Cada página de este libro', centerX, centerY + 10);
-      ctx.fillText('escrita con amor para ti.', centerX, centerY + 40);
-    }
-  },
-  {
-    type: 'poema',
-    render: () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = '#8b0000';
-      ctx.font = 'bold 22px serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('Poema para Victoria', centerX, centerY - 60);
-      ctx.font = '18px serif';
-      ctx.fillStyle = '#444';
-      ctx.fillText('En cada página un verso,', centerX, centerY - 20);
-      ctx.fillText('en cada verso un te quiero,', centerX, centerY + 10);
-      ctx.fillText('y en cada te quiero,', centerX, centerY + 40);
-      ctx.fillText('mi corazón sincero.', centerX, centerY + 70);
-    }
   }
 ];
+
+// Cargar páginas desde JSON
+fetch('paginas.json')
+  .then(response => response.json())
+  .then(data => {
+    // Agregar las páginas del JSON al array pages
+    data.forEach(pageData => {
+      pages.push({
+        type: pageData.type,
+        render: () => renderGenericPage(pageData)
+      });
+    });
+    // Si no es la primera carga, refrescar la página actual
+    showPage(currentPage);
+  });
+
+function renderGenericPage(pageData) {
+  ctx.clearRect(0, 0, width, height);
+  ctx.textAlign = 'center';
+  // Título
+  if (pageData.title) {
+    ctx.fillStyle = '#ff3366';
+    ctx.font = 'bold 24px serif';
+    ctx.fillText(pageData.title, centerX, centerY - 60);
+  }
+  // Texto principal
+  ctx.font = '18px serif';
+  ctx.fillStyle = '#444';
+  let y = centerY - 20;
+  pageData.lines.forEach(line => {
+    ctx.fillText(line, centerX, y);
+    y += 28;
+  });
+  // Imagen si existe
+  if (pageData.img) {
+    const img = new Image();
+    img.src = pageData.img;
+    img.onload = () => {
+      ctx.drawImage(img, centerX - 60, centerY + 60, 120, 80);
+    };
+  }
+}
+
 let currentPage = 0;
+let animationFrameId = null;
+let timeoutId = null;
+
+function stopAnimations() {
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+    timeoutId = null;
+  }
+}
 
 function showPage(index) {
+  stopAnimations();
   // Oculta flecha izq si es la primera página
   document.getElementById('prevPage').style.display = index === 0 ? 'none' : 'block';
   // Oculta flecha der si es la última página

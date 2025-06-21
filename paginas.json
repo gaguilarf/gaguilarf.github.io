@@ -1,0 +1,37 @@
+[
+  {
+    "type": "texto",
+    "title": "Eres mi inspiración",
+    "lines": [
+      "Cada página de este libro",
+      "está escrita con amor para ti."
+    ],
+    "img": ""
+  },
+  {
+    "type": "poema",
+    "title": "Poema para Victoria",
+    "lines": [
+      "He sembrado mi voz en el aire",
+      "para que llegue a tu oído como un pájaro sin cuerpo.",
+      "No estás, pero mis ojos te aprenden de memoria.",
+      "Bajo la lengua guardo un jardín sin luz,",
+      "donde florece tu nombre en alfabetos líquidos.",
+      "",
+      "Las horas me llueven los huesos,",
+      "y sin embargo, crezco hacia ti",
+      "como una raíz que sueña con tocar",
+      "la lluvia exacta de tus pasos.",
+      "",
+      "Quiero con la fuerza que rompe las piedras,",
+      "pero espero como quien guarda el fuego",
+      "en el cuenco de las manos dormidas.",
+      "",
+      "Quiero que vuelva, mi sentir, ",
+      "mis ganas de existir, y si vuelve,",
+      "mi pecho será un espejo cóncavo,",
+      "dispuesto a curvar tu reflejo hasta hacerlo mío."
+    ],
+    "img": ""
+  }
+]
