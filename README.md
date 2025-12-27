@@ -1,115 +1,91 @@
-# Valentine's Memory Game Proposal 💝
+# 💕 Celebración de Un Mes Juntos
 
-A romantic and interactive way to ask your special someone to be your Valentine! This web application features a memory card game in a heart shape, where matching all pairs reveals a special Valentine's proposal with cute animations and effects.
+Un proyecto interactivo de Next.js para celebrar el primer mes juntos con un juego de memoria de fotos.
 
-![Demo Preview](public/github-demo.gif)
+## 📸 Dónde Poner las Imágenes
 
-## Demo 🎮
+Las imágenes van en la carpeta: **`public/game-photos/`**
 
-You can see the live demo of the game [here](https://valentines-proposal-visibait.vercel.app).
+El proyecto necesita **18 fotos** (se crean 36 cartas porque cada foto aparece dos veces):
 
-## Features ✨
-
-- Interactive memory card game in a heart shape layout
-- Beautiful animations and transitions using Framer Motion
-- Customizable with your own photos
-- Romantic proposal screen with:
-  - Fireworks animation on acceptance
-  - Playful "No" button that moves away when hovered
-  - Cute hamster GIFs and images
-- Elegant design with Playfair Display font
-- Fully responsive layout
-- Built with Next.js and Tailwind CSS
-
-## Prerequisites 📋
-
-- Node.js (v18.18.0 or higher)
-- npm or yarn
-- Git
-
-## Getting Started 🚀
-
-1. Clone the repository:
-```bash
-git clone https://github.com/visibait/valentines.git
-cd valentines
+```
+public/
+  └── game-photos/
+      ├── 1.avif
+      ├── 2.avif
+      ├── 3.avif
+      ...
+      └── 18.avif
 ```
 
-2. Install dependencies:
+**Importante:** 
+- Las imágenes deben estar en formato `.avif` (o puedes cambiar la extensión en el código)
+- Deben nombrarse del 1 al 18
+- Son las fotos de sus momentos juntos
+
+## 🚀 Desplegar en GitHub Pages
+
+### 1. Configurar el repositorio
+
+1. Crea un repositorio en GitHub
+2. Si es tu sitio principal: `username.github.io`
+3. Si es un proyecto: cualquier nombre (ej: `celebracion`)
+
+### 2. Ajustar next.config.ts
+
+- Si tu repo es `username.github.io`, deja el código como está
+- Si tu repo tiene otro nombre (ej: `celebracion`), descomenta y edita esta línea en `next.config.ts`:
+
+```typescript
+basePath: '/celebracion',  // Reemplaza con el nombre de tu repo
+```
+
+### 3. Subir el código
+
 ```bash
+git init
+git add .
+git commit -m "Primer mes juntos 💕"
+git branch -M main
+git remote add origin https://github.com/tuusuario/tunombrerepo.git
+git push -u origin main
+```
+
+### 4. Habilitar GitHub Pages
+
+1. Ve a tu repositorio en GitHub
+2. Settings → Pages
+3. Source: **GitHub Actions**
+4. Espera unos minutos
+
+Tu sitio estará en: `https://tuusuario.github.io` o `https://tuusuario.github.io/tunombrerepo`
+
+## 🛠️ Desarrollo Local
+
+```bash
+# Instalar dependencias
 npm install
-# or
-yarn install
-```
 
-3. Replace the photos:
-   - Navigate to the `public/game-photos` directory
-   - Replace the existing images (1.avif through 36.avif) with your own photos
-   - Make sure to keep the same naming convention
-   - Use photos of you and your partner together!
-
-4. Start the development server:
-```bash
+# Ejecutar en modo desarrollo
 npm run dev
-# or
-yarn dev
+
+# Abrir http://localhost:3000
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+## 📝 Personalización
 
-## Customization 🎨
+### Cambiar textos
 
-### Changing Photos
-- Add your photos to `public/game-photos/`
-- Name them from 1.avif to 36.avif
-- For best results, use square images of the same size
-- Convert your images to .avif format for better performance
+- **Pregunta principal**: Línea 136 de `src/components/ValentinesProposal.tsx`
+- **Mensaje final**: Línea 185 de `src/components/ValentinesProposal.tsx`
+- **Instrucciones del juego**: `src/components/TextFooter.tsx`
 
-### Modifying Text
-- Edit proposal messages in `components/ValentinesProposal.tsx`
-- Change game instructions in `components/TextFooter.tsx`
+### Cambiar cantidad de fotos
 
-### Styling
-- The project uses Tailwind CSS for styling
-- Modify colors, fonts, and other styles in the respective component files
-- Main color schemes can be adjusted in `tailwind.config.js`
+Si quieres más o menos fotos, edita:
+- `src/components/PhotoPairGame.tsx` (líneas 8-25)
+- `src/components/ValentinesProposal.tsx` (líneas 12-49)
 
-## Tech Stack 💻
+## 💖 Créditos
 
-- [Next.js](https://nextjs.org/)
-- [React](https://reactjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Fireworks.js](https://fireworks.js.org/)
-
-## Contributing 🤝
-
-Contributions are welcome! Feel free to submit issues and enhancement requests.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License 📄
-
-This project is licensed under the MIT License.
-
-## Acknowledgments 🙏
-
-- Inspired by love and creativity
-- Built with Next.js 15 App Router
-
-## Author ✍️
-
-visibait - [https://visibait.com]
-
-## Donate
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/visibait)
-
----
-
-Made with ❤️ for my Valentine
-
-*Note: This project is meant for romantic purposes. Please use responsibly and spread love!*
+Adaptado para celebrar momentos especiales juntos.
