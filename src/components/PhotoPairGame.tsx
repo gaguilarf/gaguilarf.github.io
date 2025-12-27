@@ -2,28 +2,28 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // 18 images
 const images = [
-  "/game-photos/1.avif",
-  "/game-photos/2.avif",
-  "/game-photos/3.avif",
-  "/game-photos/4.avif",
-  "/game-photos/5.avif",
-  "/game-photos/6.avif",
-  "/game-photos/7.avif",
-  "/game-photos/8.avif",
-  "/game-photos/9.avif",
-  "/game-photos/10.avif",
-  "/game-photos/11.avif",
-  "/game-photos/12.avif",
-  "/game-photos/13.avif",
-  "/game-photos/14.avif",
-  "/game-photos/15.avif",
-  "/game-photos/16.avif",
-  "/game-photos/17.avif",
-  "/game-photos/18.avif",
+  "/game-photos/1.png",
+  "/game-photos/2.png",
+  "/game-photos/3.png",
+  "/game-photos/4.png",
+  "/game-photos/5.png",
+  "/game-photos/6.png",
+  "/game-photos/7.png",
+  "/game-photos/8.png",
+  "/game-photos/9.png",
+  "/game-photos/10.png",
+  "/game-photos/11.png",
+  "/game-photos/12.png",
+  "/game-photos/13.png",
+  "/game-photos/14.png",
+  "/game-photos/15.png",
+  "/game-photos/16.png",
+  "/game-photos/17.png",
+  "/game-photos/18.png",
 ];
 
 // Create 18 pairs of images (36 images in total)
@@ -58,42 +58,149 @@ export default function PhotoPairGame({
   const [selected, setSelected] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [incorrect, setIncorrect] = useState<number[]>([]);
+  const [isChecking, setIsChecking] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     // Shuffle the images when the component mounts
     setImages(shuffleArray([...imagePairs]));
   }, []);
 
-  const handleClick = async (index: number) => {
-    if (selected.length === 2 || matched.includes(index)) return;
-
-    setSelected((prev) => [...prev, index]);
-
-    if (selected.length === 1) {
-      const firstIndex = selected[0];
-      if (images[firstIndex] === images[index]) {
-        setMatched((prev) => [...prev, firstIndex, index]);
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isMusicPlaying) {
+        audioRef.current.pause();
       } else {
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second
-
-        setIncorrect([firstIndex, index]);
-        setTimeout(() => setIncorrect([]), 1000); // Clear incorrect after 1 second
+        audioRef.current.play().catch((error) => {
+          console.log("Error al reproducir audio:", error);
+        });
       }
-      setTimeout(() => setSelected([]), 1000);
+      setIsMusicPlaying(!isMusicPlaying);
+    }
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+  };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  const handleClick = (index: number) => {
+    // Prevent clicks while checking or if already selected/matched
+    if (isChecking || selected.includes(index) || matched.includes(index) || selected.length >= 2) return;
+
+    const newSelected = [...selected, index];
+    setSelected(newSelected);
+
+    // Check if we have two cards selected
+    if (newSelected.length === 2) {
+      setIsChecking(true);
+      const [firstIndex, secondIndex] = newSelected;
+      
+      if (images[firstIndex] === images[secondIndex]) {
+        // Match found
+        setTimeout(() => {
+          setMatched((prev) => [...prev, firstIndex, secondIndex]);
+          setSelected([]);
+          setIsChecking(false);
+        }, 600);
+      } else {
+        // No match
+        setIncorrect([firstIndex, secondIndex]);
+        setTimeout(() => {
+          setIncorrect([]);
+          setSelected([]);
+          setIsChecking(false);
+        }, 1000);
+      }
     }
   };
 
   // Check if game is won
   useEffect(() => {
     if (matched.length === imagePairs.length) {
+      // Detener la música
+      if (audioRef.current) {
+        audioRef.current.pause();
+        setIsMusicPlaying(false);
+      }
       handleShowProposal();
     }
   }, [matched, handleShowProposal]);
 
   return (
-    <div className="grid grid-cols-9 gap-2">
-      {/* Image preload */}
-      <div className="hidden">
+    <>
+      {/* Audio player */}
+      <audio
+        ref={audioRef}
+        src="/music/background.mp3"
+        loop
+        preload="auto"
+      />
+
+      {/* Music controls */}
+      <div 
+        className="fixed top-5 right-5 z-50 flex items-center gap-2"
+        onMouseEnter={() => setShowVolumeSlider(true)}
+        onMouseLeave={() => setShowVolumeSlider(false)}
+      >
+        {/* Volume slider */}
+        <motion.div
+          initial={{ width: 0, opacity: 0 }}
+          animate={{ 
+            width: showVolumeSlider ? 120 : 0,
+            opacity: showVolumeSlider ? 1 : 0
+          }}
+          transition={{ duration: 0.3 }}
+          className="overflow-hidden"
+        >
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer slider"
+            style={{
+              background: `linear-gradient(to right, rgb(236 72 153) 0%, rgb(236 72 153) ${volume * 100}%, rgba(255,255,255,0.2) ${volume * 100}%, rgba(255,255,255,0.2) 100%)`
+            }}
+          />
+        </motion.div>
+
+        {/* Music toggle button */}
+        <button
+          onClick={toggleMusic}
+          className="p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all duration-300"
+          aria-label="Toggle music"
+        >
+          {isMusicPlaying ? (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      <div className="grid grid-cols-9 gap-2">
+        {/* Image preload */}
+        <div className="hidden">
         {images.map((image, i) => (
           <Image
             key={i}
@@ -165,6 +272,7 @@ export default function PhotoPairGame({
           <div key={i} className="w-20 h-20"></div>
         )
       )}
-    </div>
+      </div>
+    </>
   );
 }

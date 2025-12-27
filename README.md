@@ -11,15 +11,15 @@ El proyecto necesita **18 fotos** (se crean 36 cartas porque cada foto aparece d
 ```
 public/
   └── game-photos/
-      ├── 1.avif
-      ├── 2.avif
-      ├── 3.avif
+      ├── 1.png
+      ├── 2.png
+      ├── 3.png
       ...
-      └── 18.avif
+      └── 18.png
 ```
 
 **Importante:** 
-- Las imágenes deben estar en formato `.avif` (o puedes cambiar la extensión en el código)
+- Las imágenes deben estar en formato `.png` (o puedes cambiar la extensión en el código)
 - Deben nombrarse del 1 al 18
 - Son las fotos de sus momentos juntos
 
@@ -34,11 +34,6 @@ public/
 ### 2. Ajustar next.config.ts
 
 - Si tu repo es `username.github.io`, deja el código como está
-- Si tu repo tiene otro nombre (ej: `celebracion`), descomenta y edita esta línea en `next.config.ts`:
-
-```typescript
-basePath: '/celebracion',  // Reemplaza con el nombre de tu repo
-```
 
 ### 3. Subir el código
 
