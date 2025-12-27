@@ -116,13 +116,15 @@ export default function PhotoPairGame({
           setIsChecking(false);
         }, 600);
       } else {
-        // No match - increased timeout to give more time to see the cards
-        setIncorrect([firstIndex, secondIndex]);
+        // No match - show cards for 1 second, then show red effect, then flip back
         setTimeout(() => {
-          setIncorrect([]);
-          setSelected([]);
-          setIsChecking(false);
-        }, 2000); // Increased from 1000ms to 2000ms
+          setIncorrect([firstIndex, secondIndex]);
+          setTimeout(() => {
+            setIncorrect([]);
+            setSelected([]);
+            setIsChecking(false);
+          }, 600); // Red effect duration
+        }, 1000); // Time to see the cards before red effect
       }
     }
   };
