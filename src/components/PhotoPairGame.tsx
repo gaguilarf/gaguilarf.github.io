@@ -116,13 +116,13 @@ export default function PhotoPairGame({
           setIsChecking(false);
         }, 600);
       } else {
-        // No match
+        // No match - increased timeout to give more time to see the cards
         setIncorrect([firstIndex, secondIndex]);
         setTimeout(() => {
           setIncorrect([]);
           setSelected([]);
           setIsChecking(false);
-        }, 1000);
+        }, 2000); // Increased from 1000ms to 2000ms
       }
     }
   };
