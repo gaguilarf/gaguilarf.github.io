@@ -86,7 +86,7 @@ export default function ValentinesProposal() {
         console.log("Error al reproducir audio:", error);
       });
     }
-  }, []);
+  }, [volume]);
 
   const toggleMusic = () => {
     if (audioRef.current) {
