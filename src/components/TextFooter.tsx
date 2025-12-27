@@ -22,12 +22,6 @@ export default function TextFooter() {
       >
         para revelar <br /> <span className="text-gray-400">la sorpresa</span>
       </h1>
-
-      {/* Copyright */}
-      <p className="absolute bottom-5 right-5 text-white text-sm opacity-15 hover:opacity-50">
-        © {new Date().getFullYear()}{" "}
-        <Link href="https://visibait.com">visibait.com</Link>
-      </p>
     </>
   );
 }
