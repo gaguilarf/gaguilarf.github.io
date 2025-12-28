@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import TextFooter from "@/components/TextFooter";
 import PhotoPairGame from "../components/PhotoPairGame";
 import ValentinesProposal from "@/components/ValentinesProposal";
+import SnowFall from "@/components/SnowFall";
 
 const ANIM_DURATION = 2;
 
@@ -22,6 +23,7 @@ export default function Home() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-black relative px-10">
+      <SnowFall />
       {!showValentinesProposal ? (
         <motion.div
           initial={{ opacity: 1 }}

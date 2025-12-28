@@ -52,3 +52,17 @@ input[type="range"].slider::-moz-range-thumb:hover {
   transform: scale(1.2);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
+
+/* Snow animation */
+@keyframes fall {
+  0% {
+    transform: translateY(-100vh) translateX(0);
+  }
+  100% {
+    transform: translateY(100vh) translateX(100px);
+  }
+}
+
+.animate-fall {
+  animation: fall linear infinite;
+}
