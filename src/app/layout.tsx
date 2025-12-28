@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Valentines: A Romantic Card Game with a Surprise Proposal",
+  title: "Feliz mesario amor",
   description:
-    "Play a unique Valentine's card game. Complete the collection to reveal a romantic proposal!",
+    "Juego para emparejar cards y divertirte un poco viendo nuestras fotos",
   keywords: [
-    "Valentine's card game",
+    "Mesario card game",
     "romantic proposal game",
     "photo card challenge",
-    "Valentine's Day surprise",
+    "Mesario Day surprise",
     "couples game",
-    "valentine's day game",
+    "Mesario day game",
     "proposal game",
   ],
 };
