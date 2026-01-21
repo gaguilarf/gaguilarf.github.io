@@ -1,47 +1,74 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-
-import TextFooter from "@/components/TextFooter";
-import PhotoPairGame from "../components/PhotoPairGame";
-import ValentinesProposal from "@/components/ValentinesProposal";
-import SnowFall from "@/components/SnowFall";
-
-const ANIM_DURATION = 2;
+import EventMenu from "@/components/EventMenu";
+import BirthdayGame from "@/components/BirthdayGame";
+import MesarioGame from "@/components/MesarioGame";
+import { EventType } from "@/config/events";
 
 export default function Home() {
-  const [showValentinesProposal, setShowValentinesProposal] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
 
-  const handleShowProposal = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setShowValentinesProposal(true);
-    }, ANIM_DURATION * 1000);
+  const handleSelectEvent = (eventId: string) => {
+    setSelectedEvent(eventId as EventType);
   };
 
+  const handleBackToMenu = () => {
+    setSelectedEvent(null);
+  };
+
+  // Show event menu if no event selected
+  if (!selectedEvent) {
+    return <EventMenu onSelectEvent={handleSelectEvent} />;
+  }
+
+  // Show selected event game
+  if (selectedEvent === 'cumpleanos') {
+    return (
+      <div>
+        <BackButton onClick={handleBackToMenu} />
+        <BirthdayGame />
+      </div>
+    );
+  }
+
+  if (selectedEvent === 'mesario') {
+    return (
+      <div>
+        <BackButton onClick={handleBackToMenu} />
+        <MesarioGame />
+      </div>
+    );
+  }
+
+  return null;
+}
+
+type BackButtonProps = {
+  onClick: () => void;
+};
+
+function BackButton({ onClick }: BackButtonProps) {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black relative px-10">
-      <SnowFall />
-      {!showValentinesProposal ? (
-        <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ opacity: isTransitioning ? 0 : 1 }}
-          transition={{ duration: ANIM_DURATION }}
-        >
-          <PhotoPairGame handleShowProposal={handleShowProposal} />
-          <TextFooter />
-        </motion.div>
-      ) : (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: ANIM_DURATION }}
-        >
-          <ValentinesProposal />
-        </motion.div>
-      )}
-    </div>
+    <button
+      onClick={onClick}
+      className="fixed top-5 left-5 z-50 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl text-white font-medium transition-all duration-300 flex items-center gap-2"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        />
+      </svg>
+      Volver al Menú
+    </button>
   );
 }
