@@ -21,16 +21,16 @@ export default function VictoryMessage({ message }: VictoryMessageProps) {
   // ============================================
   const birthdayMessage = `¡Feliz Cumpleaños, mi amor! 🎉
 
-Hoy es un día muy especial porque celebramos tu vida y todo lo maravilloso que eres. 
+Hoy es un día muy especial porque celebramos tu vida y todo lo maravillosa que eres. 
 
-Cada momento a tu lado ha sido increíble, y estoy muy feliz de poder compartir este día contigo.
+Cada momento que compartimos ha sido increíble, y estoy muy feliz de poder compartir este día contigo.
 
 Que este nuevo año de vida esté lleno de alegría, amor y muchas sorpresas hermosas.
 
 ¡Te amo muchísimo! 💕
 
 Con todo mi amor,
-[Tu nombre aquí]`;
+De Gus, el extraterrestre que se enamoró del sol`;
   // ============================================
   // ☝️ EDITA EL TEXTO DE ARRIBA
   // ============================================
