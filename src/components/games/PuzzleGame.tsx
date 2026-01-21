@@ -124,7 +124,7 @@ export default function PuzzleGame({ onComplete }: PuzzleGameProps) {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <MusicPlayer audioSrc="/music/background.mp3" autoPlay={true} />
+      <MusicPlayer audioSrc="/music/background2.mp3" autoPlay={true} />
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}

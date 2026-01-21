@@ -37,7 +37,7 @@ De Gus, el extraterrestre que se enamoró del sol`;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen relative px-4">
-      <MusicPlayer audioSrc="/music/winner.mp3" autoPlay={true} />
+      <MusicPlayer audioSrc="/music/winner2.mp3" autoPlay={true} />
 
       {/* Fireworks background */}
       <div className="absolute w-full h-full">
