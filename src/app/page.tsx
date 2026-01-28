@@ -4,6 +4,7 @@ import { useState } from "react";
 import EventMenu from "@/components/EventMenu";
 import BirthdayGame from "@/components/BirthdayGame";
 import MesarioGame from "@/components/MesarioGame";
+import Mesario2Game from "@/components/Mesario2Game";
 import { EventType } from "@/config/events";
 
 export default function Home() {
@@ -37,6 +38,15 @@ export default function Home() {
       <div>
         <BackButton onClick={handleBackToMenu} />
         <MesarioGame />
+      </div>
+    );
+  }
+
+  if (selectedEvent === 'mesario2') {
+    return (
+      <div>
+        <BackButton onClick={handleBackToMenu} />
+        <Mesario2Game />
       </div>
     );
   }

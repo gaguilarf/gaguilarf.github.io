@@ -1,4 +1,4 @@
-export type EventType = 'mesario' | 'cumpleanos';
+export type EventType = 'mesario' | 'mesario2' | 'cumpleanos';
 
 export interface EventConfig {
   id: EventType;
@@ -19,6 +19,14 @@ export const events: EventConfig[] = [
     color: 'from-pink-500 to-rose-500',
   },
   {
+    id: 'mesario2',
+    date: '27/02/2026',
+    title: 'Nuestro Segundo Mes',
+    subtitle: 'Celebrando dos meses juntos',
+    emoji: '💝',
+    color: 'from-red-500 to-pink-500',
+  },
+  {
     id: 'cumpleanos',
     date: '21/01/2026',
     title: 'Tu Cumpleaños',
@@ -27,3 +35,4 @@ export const events: EventConfig[] = [
     color: 'from-purple-500 to-pink-500',
   },
 ];
+
